@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import DarkModeToggle from "./DarkModeToggle";
 import './App.css';
 
@@ -12,6 +12,9 @@ function App() {
 
   const [isListOpen, setIsListOpen] = useState(false);
   const [svgData, setSvgData] = useState([]);
+
+  const [maxItemWidth, setMaxItemWidth] = useState(0);
+  const listRef = useRef(null);
 
   useEffect(() => {
     // Load SVG names and their previews
@@ -28,6 +31,37 @@ function App() {
 
     loadSVGs();
   }, []);
+
+  useEffect(() => {
+    if (!isListOpen || maxItemWidth !== 0) return;
+
+    const calculateWidth = () => {
+      if (listRef.current) {
+        let maxWidth = 0;
+        const items = listRef.current.querySelectorAll('.svg-list-item');
+
+        items.forEach(item => {
+          const img = item.querySelector('.svg-preview');
+          const text = item.querySelector('span');
+
+          if (img && text) {
+            const totalWidth = img.offsetWidth + text.offsetWidth;
+            if (totalWidth > maxWidth) {
+              maxWidth = totalWidth;
+            }
+          }
+        });
+
+        setMaxItemWidth(maxWidth);
+      }
+    };
+
+    // Delay measurement to ensure elements are fully rendered
+    const timeout = setTimeout(calculateWidth, 50);
+
+    return () => clearTimeout(timeout); // Cleanup timeout if component unmounts
+  }, [isListOpen]);
+
 
   const handleSearch = () => {
     const fixedText = searchText.toLowerCase()
@@ -61,7 +95,7 @@ function App() {
           </button>
 
           {isListOpen && (
-            <ul className="svg-list">
+            <ul className="svg-list" ref={listRef} style={{ gridTemplateColumns: `repeat(auto-fit, minmax(${maxItemWidth}px, 1fr))` }}>
               {svgData.map(({ name, src }) => (
                 <li key={name} className="svg-list-item">
                   {typeof src === 'string' ? (
@@ -91,6 +125,7 @@ function App() {
 
       {!selectedSvg && submittedText && <p className="not-found">"{submittedText}" does not have a character.</p>}
 
+      <span>{maxItemWidth}</span>
       <DarkModeToggle />
     </div>
   );
