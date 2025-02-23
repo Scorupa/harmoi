@@ -2,18 +2,26 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 // Dynamically import SVGs using import.meta.glob()
-const svgFolderPath = '../harmoiGlyphs/'
+const svgFolderPath = '../harmoiGlyphs/';
 const svgModules = import.meta.glob('../harmoiGlyphs/*.svg');
 
 function App() {
-  const [svgNames, setSvgNames] = useState([]);
-  const [SelectedSvg, setSelectedSvg] = useState(null);
+  // ---- State variables and setters ------------------------------------
   const [searchText, setSearchText] = useState('');
   const [submittedText, setSubmittedText] = useState('');
 
+  const [SelectedSvg, setSelectedSvg] = useState(null);
+
+  const [isListOpen, setIsListOpen] = useState(false);
+  const [svgNames, setSvgNames] = useState([]);
+
+  // ---- functions ------------------------------------------------------
+
   useEffect(() => {
     // Extract file names from the paths of SVGs to show as options
-    setSvgNames(Object.keys(svgModules).map((path) => path.replace(svgFolderPath, '').replace('.svg', '')));
+    setSvgNames(Object.keys(svgModules).map((path) =>
+      path.replace(svgFolderPath, '')
+          .replace('.svg', '')));
   }, []);
 
   const handleInputChange = (e) => {
@@ -41,6 +49,8 @@ function App() {
     }
   };
 
+  // ---- html ------------------------------------------------------
+
   return (
     <>
       <h1>Harmoi Character Dictionary</h1>
@@ -54,15 +64,23 @@ function App() {
       />
       <button onClick={handleSearch}>Search</button>
 
-      {/* Display available SVG names as options */}
+      {/* Collapsible List of Available SVG Names */}
       {svgNames.length > 0 && (
         <div>
-          <h3>Available Harmoi Characters:</h3>
-          <ul>
-            {svgNames.map((word) => (
-              <li key={word}>{word}</li>
-            ))}
-          </ul>
+          <button onClick={() => setIsListOpen(!isListOpen)}>
+            {isListOpen ? 'Hide List' : 'Show Characters List'}
+          </button>
+
+          {isListOpen && (
+            <div>
+              <h3>Available Harmoi Characters:</h3>
+              <ul>
+                {svgNames.map((word) => (
+                  <li key={word}>{word}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
 
