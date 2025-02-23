@@ -35,34 +35,39 @@ function App() {
   };
 
   return (
-    <>
-      <h1>Harmoi Character Dictionary</h1>
+    <div>
+      <h1 className="title">Harmoi Character Dictionary</h1>
 
-      <input
-        type="text"
-        value={searchText}
-        onChange={(e) => setSearchText(e.target.value)}
-        placeholder="Enter a word (try 'yellow')"
-      />
-      <button onClick={handleSearch}>Search</button>
+      <div className="search-container">
+        <input
+          type="text"
+          className="search-input"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          placeholder="Enter a word (try 'yellow')"
+        />
+        <button className="search-button" onClick={handleSearch}>
+          Search
+        </button>
+      </div>
 
       {/* Collapsible List of Available SVG Names with Previews */}
       {svgData.length > 0 && (
-        <div>
-          <button onClick={() => setIsListOpen(!isListOpen)}>
+        <div className="list-container">
+          <button className="toggle-button" onClick={() => setIsListOpen(!isListOpen)}>
             {isListOpen ? 'Hide List' : 'Show Characters List'}
           </button>
 
           {isListOpen && (
-            <ul>
+            <ul className="svg-list">
               {svgData.map(({ name, src }) => (
-                <li key={name} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <li key={name} className="svg-list-item">
                   {typeof src === 'string' ? (
-                    <img src={src} alt={name} width={50} height={50} />
+                    <img src={src} alt={name} className="svg-preview" />
                   ) : (
-                    <src width={50} height={50} />
+                    <src className="svg-preview" />
                   )}
-                  {name}
+                  <span>{name}</span>
                 </li>
               ))}
             </ul>
@@ -71,15 +76,19 @@ function App() {
       )}
 
       {/* Render the selected SVG */}
-      {selectedSvg &&
-        (typeof selectedSvg === 'string' ? (
-          <img src={selectedSvg} alt={searchText} width={100} height={100} />
-        ) : (
-          <selectedSvg width={100} height={100} />
-        ))}
+      {selectedSvg && (
+        <div className="selected-svg-container">
+          <h3 className="selected-svg-title">Selected SVG:</h3>
+          {typeof selectedSvg === 'string' ? (
+            <img src={selectedSvg} alt={searchText} className="selected-svg" />
+          ) : (
+            <selectedSvg className="selected-svg" />
+          )}
+        </div>
+      )}
 
-      {!selectedSvg && submittedText && <p>{submittedText} does not have a character.</p>}
-    </>
+      {!selectedSvg && submittedText && <p className="not-found">{submittedText} does not have a character.</p>}
+    </div>
   );
 }
 
