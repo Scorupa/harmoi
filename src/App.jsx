@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import './App.css';
 
 // Dynamically import SVGs using import.meta.glob()
+const svgFolderPath = '../harmoiGlyphs/'
 const svgModules = import.meta.glob('../harmoiGlyphs/*.svg');
 
-function SvgSelector() {
+function App() {
   const [svgNames, setSvgNames] = useState([]);
-  const [selectedSvg, setSelectedSvg] = useState(null);
+  const [SelectedSvg, setSelectedSvg] = useState(null);
   const [searchText, setSearchText] = useState('');
   const [submittedText, setSubmittedText] = useState('');
 
   useEffect(() => {
     // Extract file names from the paths of SVGs to show as options
-    setSvgNames(Object.keys(svgModules).map((path) => path.replace('../harmoiGlyphs/', '').replace('.svg', '')));
+    setSvgNames(Object.keys(svgModules).map((path) => path.replace(svgFolderPath, '').replace('.svg', '')));
   }, []);
 
   const handleInputChange = (e) => {
@@ -20,7 +22,7 @@ function SvgSelector() {
 
   const handleSearch = () => {
     setSubmittedText(searchText);
-    const svgPath = `../harmoiGlyphs/${searchText}.svg`;
+    const svgPath = `${svgFolderPath}${searchText}.svg`;
 
     if (svgModules[svgPath]) {
       svgModules[svgPath]().then((module) => {
@@ -40,48 +42,48 @@ function SvgSelector() {
   };
 
   return (
-    <div>
-      <h1>SVG Selector</h1>
+    <>
+      <h1>Harmoi Character Dictionary</h1>
 
-      {/* Input field for user to choose an SVG */}
+      {/* Input field for user to choose a Harmoi character */}
       <input
         type="text"
         value={searchText}
         onChange={handleInputChange}
-        placeholder="Enter SVG name (e.g., 'icon1')"
+        placeholder="Enter a word (try 'yellow')"
       />
-      <button onClick={handleSearch}>Submit</button>
+      <button onClick={handleSearch}>Search</button>
 
       {/* Display available SVG names as options */}
       {svgNames.length > 0 && (
         <div>
-          <h3>Available SVGs:</h3>
+          <h3>Available Harmoi Characters:</h3>
           <ul>
-            {svgNames.map((name) => (
-              <li key={name}>{name}</li>
+            {svgNames.map((word) => (
+              <li key={word}>{word}</li>
             ))}
           </ul>
         </div>
       )}
 
       {/* Render the selected SVG */}
-      {selectedSvg &&
-        (typeof selectedSvg === 'string' ? (
+      {SelectedSvg &&
+        (typeof SelectedSvg === 'string' ? (
           <div>
             <h3>Selected SVG:</h3>
-            <img src={selectedSvg} alt={searchText} width={100} height={100} />
+            <img src={SelectedSvg} alt={searchText} width={100} height={100} />
           </div>
         ) : (
           <div>
             <h3>Selected SVG:</h3>
-            <selectedSvg width={100} height={100} />
+            <SelectedSvg width={100} height={100} />
           </div>
         ))}
 
       {/* Show message if no matching SVG is found */}
-      {!selectedSvg && submittedText && <p>{submittedText} does not have a character.</p>}
-    </div>
+      {!SelectedSvg && submittedText && <p>{submittedText} does not have a character.</p>}
+    </>
   );
 }
 
-export default SvgSelector;
+export default App;
