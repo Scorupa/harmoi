@@ -30,8 +30,9 @@ function App() {
   }, []);
 
   const handleSearch = () => {
-    setSubmittedText(searchText);
-    const foundSvg = svgData.find((svg) => svg.name === searchText);
+    const fixedText = searchText.toLowerCase()
+    setSubmittedText(fixedText);
+    const foundSvg = svgData.find((svg) => svg.name === fixedText);
     setSelectedSvg(foundSvg ? foundSvg.src : null);
   };
 
@@ -88,7 +89,7 @@ function App() {
         </div>
       )}
 
-      {!selectedSvg && submittedText && <p className="not-found">{submittedText} does not have a character.</p>}
+      {!selectedSvg && submittedText && <p className="not-found">"{submittedText}" does not have a character.</p>}
 
       <DarkModeToggle />
     </div>
