@@ -21,7 +21,8 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  flex-direction: column; /* Stack content vertically */
+  align-items: center; /* Keep it centered horizontally */
   min-width: 320px;
   min-height: 100vh;
 }
