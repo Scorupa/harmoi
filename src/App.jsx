@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import DarkModeToggle from "./DarkModeToggle";
 import './App.css';
 
 // Dynamically import SVGs
@@ -88,6 +89,8 @@ function App() {
       )}
 
       {!selectedSvg && submittedText && <p className="not-found">{submittedText} does not have a character.</p>}
+
+      <DarkModeToggle />
     </div>
   );
 }

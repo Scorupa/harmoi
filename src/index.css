@@ -3,10 +3,6 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -35,12 +31,26 @@ h1 {
   line-height: 1.1;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
+/* Dark mode */
+:root {
+  --text-color: rgba(33, 53, 71);
+  --bg-color: rgba(240, 240, 240);
+  --color-scheme: light;
+  --transition-duration: 0.3s;
+}
+
+.dark-mode {
+  --text-color: rgba(255, 255, 255, 0.87);
+  --bg-color: rgba(36, 36, 36);
+  --color-scheme: dark;
+}
+
+body {
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  color-scheme: var(--color-scheme);
+  transition:
+    color var(--transition-duration),
+    background-color var(--transition-duration),
+    color-scheme var(--transition-duration);
 }

@@ -81,10 +81,15 @@
   justify-content: center;
 }
 
+.dark-mode {
+  --svg-colors: invert(1) hue-rotate(180deg);
+}
+
 /* SVG images */
 .svg-preview,
 .selected-svg {
-  filter: invert(1) hue-rotate(180deg);
+  filter: var(--svg-colors);
+  transition: filter var(--transition-duration);
 }
 
 .svg-preview {
