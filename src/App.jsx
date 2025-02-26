@@ -8,7 +8,7 @@ const svgModules = import.meta.glob('../harmoiGlyphs/*.svg');
 function App() {
   const [searchText, setSearchText] = useState('');
   const [submittedText, setSubmittedText] = useState('');
-  const [selectedSvg, setSelectedSvg] = useState(null);
+  const [selectedSvg, setSelectedSvg] = useState([]);
 
   const [isListOpen, setIsListOpen] = useState(false);
   const [svgData, setSvgData] = useState([]);
@@ -64,10 +64,13 @@ function App() {
 
 
   const handleSearch = () => {
-    const fixedText = searchText.toLowerCase()
-    setSubmittedText(fixedText);
-    const foundSvg = svgData.find((svg) => svg.name === fixedText);
-    setSelectedSvg(foundSvg ? foundSvg.src : null);
+    const words = searchText.toLowerCase().split(/\s+/); // Split input into words
+    const foundSvgs = words
+      .map(word => svgData.find(svg => svg.name === word))
+      .filter(Boolean); // Remove any unmatched words
+
+    setSubmittedText(searchText);
+    setSelectedSvg(foundSvgs.map(svg => svg.src));
   };
 
   return (
@@ -112,18 +115,22 @@ function App() {
       )}
 
       {/* Render the selected SVG */}
-      {selectedSvg && (
+      {selectedSvg.length > 0 && (
         <div className="selected-svg-container">
-          <h3 className="selected-svg-title">Selected SVG:</h3>
-          {typeof selectedSvg === 'string' ? (
-            <img src={selectedSvg} alt={searchText} className="selected-svg" />
-          ) : (
-            <selectedSvg className="selected-svg" />
-          )}
+          <h3 className="selected-svg-title">Selected SVGs:</h3>
+          <div className="selected-svg-list">
+            {selectedSvg.map((src, index) => (
+              typeof src === 'string' ? (
+                <img key={index} src={src} alt={`SVG ${index}`} className="selected-svg" />
+              ) : (
+                <src key={index} className="selected-svg" />
+              )
+            ))}
+          </div>
         </div>
       )}
 
-      {!selectedSvg && submittedText && <p className="not-found">"{submittedText}" does not have a character.</p>}
+      {selectedSvg.length === 0 && submittedText && <p className="not-found">"{submittedText}" does not have a character.</p>}
 
       <DarkModeToggle />
     </div>
