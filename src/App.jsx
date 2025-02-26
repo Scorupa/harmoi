@@ -66,12 +66,15 @@ function App() {
   const handleSearch = () => {
     const words = searchText.toLowerCase().split(/\s+/); // Split input into words
     const foundSvgs = words
-      .map(word => svgData.find(svg => svg.name === word))
-      .filter(Boolean); // Remove any unmatched words
+      .map(word => {
+        const match = svgData.find(svg => svg.name === word);
+        return match ? { name: word, src: match.src } : null;
+      })
+      .filter(Boolean); // Remove unmatched words
 
     setSubmittedText(searchText);
-    setSelectedSvg(foundSvgs.map(svg => svg.src));
-  };
+    setSelectedSvg(foundSvgs); // Store an array of objects { name, src }
+};
 
   return (
     <div>
@@ -119,12 +122,15 @@ function App() {
         <div className="selected-svg-container">
           <h3 className="selected-svg-title">Selected SVGs:</h3>
           <div className="selected-svg-list">
-            {selectedSvg.map((src, index) => (
-              typeof src === 'string' ? (
-                <img key={index} src={src} alt={`SVG ${index}`} className="selected-svg" />
-              ) : (
-                <src key={index} className="selected-svg" />
-              )
+            {selectedSvg.map(({ name, src }, index) => (
+              <div key={index} className="selected-svg-item">
+                {typeof src === 'string' ? (
+                  <img src={src} alt={name} className="selected-svg" />
+                ) : (
+                  <src className="selected-svg" />
+                )}
+                <p className="selected-svg-name">{name}</p>
+              </div>
             ))}
           </div>
         </div>
