@@ -125,7 +125,6 @@ function App() {
 
       {!selectedSvg && submittedText && <p className="not-found">"{submittedText}" does not have a character.</p>}
 
-      <span>{maxItemWidth}</span>
       <DarkModeToggle />
     </div>
   );
