@@ -65,20 +65,18 @@ function App() {
 
   const handleSearch = () => {
     const words = searchText.toLowerCase().split(/\s+/); // Split input into words
-    const foundSvgs = words
-      .map(word => {
-        const match = svgData.find(svg => svg.name === word);
-        return match ? { name: word, src: match.src } : null;
-      })
-      .filter(Boolean); // Remove unmatched words
+    const results = words.map(word => {
+      const match = svgData.find(svg => svg.name === word);
+      return match ? { name: word, src: match.src } : { name: word, src: null };
+    });
 
     setSubmittedText(searchText);
-    setSelectedSvg(foundSvgs); // Store an array of objects { name, src }
-};
+    setSelectedSvg(results);
+  };
 
   return (
     <div>
-      <h1 className="title">Harmoi Character Dictionary</h1>
+      <h1 className="title">Harmoi Character Display</h1>
 
       <div className="search-container">
         <input
@@ -86,10 +84,10 @@ function App() {
           className="search-input"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
-          placeholder="Enter a word (try 'yellow')"
+          placeholder="Enter a word or sentence"
         />
         <button className="search-button" onClick={handleSearch}>
-          Search
+          Translate
         </button>
       </div>
 
@@ -120,14 +118,18 @@ function App() {
       {/* Render the selected SVG */}
       {selectedSvg.length > 0 && (
         <div className="selected-svg-container">
-          <h3 className="selected-svg-title">Selected SVGs:</h3>
+          <h3 className="selected-svg-title">Your input in Harmoi characters:</h3>
           <div className="selected-svg-list">
             {selectedSvg.map(({ name, src }, index) => (
               <div key={index} className="selected-svg-item">
-                {typeof src === 'string' ? (
-                  <img src={src} alt={name} className="selected-svg" />
+                {src ? (
+                  typeof src === 'string' ? (
+                    <img src={src} alt={name} className="selected-svg" />
+                  ) : (
+                    <src className="selected-svg" />
+                  )
                 ) : (
-                  <src className="selected-svg" />
+                  <div className="no-svg">No character found</div> // Placeholder for missing SVG
                 )}
                 <p className="selected-svg-name">{name}</p>
               </div>
@@ -135,8 +137,6 @@ function App() {
           </div>
         </div>
       )}
-
-      {selectedSvg.length === 0 && submittedText && <p className="not-found">"{submittedText}" does not have a character.</p>}
 
       <DarkModeToggle />
     </div>

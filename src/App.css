@@ -3,6 +3,8 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+
+  --svg-size: 120px;
 }
 
 /* Title */
@@ -125,12 +127,18 @@
 }
 
 .selected-svg {
-  height: 120px;
+  height: var(--svg-size);
 }
 
-/* Not found message */
-.not-found {
-  color: red;
-  font-size: 16px;
-  margin-top: 10px;
+/* Missing SVG placeholder */
+.no-svg {
+  width: var(--svg-size);
+  height: var(--svg-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed gray;
+  color: gray;
+  font-size: 0.9rem;
+  text-align: center;
 }
