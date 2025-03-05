@@ -33,7 +33,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!isListOpen || maxItemWidth !== 0) return;
+    if (maxItemWidth !== 0) return;
 
     const calculateWidth = () => {
       if (listRef.current) {
