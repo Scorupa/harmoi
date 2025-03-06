@@ -96,16 +96,18 @@
 /* Dark mode */
 .svg-preview {
   height: 60px;
+  border-radius: 8px;
   transition:
     transform 0.5s ease-in-out,
-    background-color 1s ease-out,
-    border-radius 1s ease-out;
+    background-color 0.7s ease-in-out;
 }
 
 .svg-preview:hover {
   transform: scale(2.5);
-  background-color: rgba(255,255,255,0.7);
-  border-radius: 8px;
+  background-color: rgba(255,255,255,0.93);
+  transition:
+    transform 0.5s ease-in-out,
+    background-color 0.2s ease-in-out;
   position: relative; /* Ensures z-index works */
   z-index: 1000; /* Very high to bring it to the front */
 }
