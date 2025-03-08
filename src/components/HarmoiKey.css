@@ -1,0 +1,9 @@
+.key-svg-container {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.key-svg {
+  width: auto;
+  height: 500px;
+}
