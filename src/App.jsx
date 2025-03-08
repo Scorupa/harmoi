@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import DarkModeToggle from "./DarkModeToggle";
+import KeySvg from "./00 key.svg";
 import './App.css';
 
 // Dynamically import SVGs
@@ -15,6 +16,8 @@ function App() {
 
   const [maxItemWidth, setMaxItemWidth] = useState(0);
   const listRef = useRef(null);
+
+  const [showKeySvg, setShowKeySvg] = useState(false);
 
   useEffect(() => {
     // Load SVG names and their previews
@@ -90,6 +93,17 @@ function App() {
           Translate
         </button>
       </div>
+
+      {/* Harmoi Key */}
+      <button onClick={() => setShowKeySvg(!showKeySvg)}>
+        {showKeySvg ? "Hide Key" : "Show Key"}
+      </button>
+
+      {showKeySvg && (
+        <div className="key-svg-container">
+          <img src={KeySvg} alt="Key" className="key-svg" />
+        </div>
+      )}
 
       {/* Collapsible List of Available SVG Names with Previews */}
       {svgData.length > 0 && (

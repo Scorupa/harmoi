@@ -43,6 +43,16 @@
   background-color: #0056b3;
 }
 
+.key-svg-container {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.key-svg {
+  width: auto;
+  height: 500px;
+}
+
 /* Collapsible list */
 .list-container {
   margin-top: 20px;
@@ -88,7 +98,8 @@
 
 /* SVG images */
 .svg-preview,
-.selected-svg {
+.selected-svg,
+.key-svg {
   filter: var(--svg-colors);
   transition: filter var(--transition-duration);
 }
