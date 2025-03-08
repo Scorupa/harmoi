@@ -18,14 +18,16 @@ const DarkModeToggle = () => {
 
   return (
     <div className="dark-mode-toggle">
-      <span>Light Mode 🌞</span>
+      <span className="toggle-text">Light Mode</span>
+      <span>🌞</span>
 
       <label className="switch">
         <input type="checkbox" checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
         <span className="slider"></span>
       </label>
 
-      <span>Dark Mode 🌙</span>
+      <span className="toggle-text">Dark Mode</span>
+      <span>🌙</span>
     </div>
   );
 };
