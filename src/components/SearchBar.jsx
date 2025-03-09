@@ -5,7 +5,7 @@ const SearchBar = ({ svgData, setSelectedSvg }) => {
   const [searchText, setSearchText] = useState('');
 
   const handleSearch = () => {
-    const words = searchText.toLowerCase().split(/\s+/); // Split input into words
+    const words = searchText.toLowerCase().match(/[\w'-]+|[^\w\s]/g);
     const results = words.map(word => {
       const match = svgData.find(svg => svg.name === word);
       return match ? { name: word, src: match.src } : { name: word, src: null };
