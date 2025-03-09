@@ -1,4 +1,4 @@
 [submodule "harmoiGlyphs"]
 	path = harmoiGlyphs
-	url = git@github.com-scorupa:Scorupa/harmoiGlyphs.git
+	url = https://github.com/Scorupa/harmoiGlyphs.git
 	branch = main
