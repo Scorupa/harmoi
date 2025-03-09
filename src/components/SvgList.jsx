@@ -32,7 +32,7 @@ const SvgList = ({ svgData }) => {
 
     const timeout = setTimeout(calculateWidth, 50);
     return () => clearTimeout(timeout);
-  }, [isListOpen]);
+  }, [svgData]);
 
   return (
     <div className="list-container">
@@ -40,20 +40,19 @@ const SvgList = ({ svgData }) => {
         {isListOpen ? 'Hide List' : 'Show Characters List'}
       </button>
 
-      {isListOpen && (
-        <ul className="svg-list"
-          ref={listRef}
-          style={{ gridTemplateColumns: `repeat(auto-fit, minmax(${maxItemWidth}px, 1fr))` }}>
-          {svgData.map(({ name, src }) => (
-            <li key={name} className="svg-list-item">
-              {typeof src === 'string' ?
-                <img src={src} alt={name} className="svg-preview harmoi-glyph" />:
-                <src className="svg-preview harmoi-glyph" />}
-              <span>{name}</span>
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul
+        className={`svg-list ${isListOpen ? '' : 'hidden-list'}`}
+        ref={listRef}
+        style={{ gridTemplateColumns: `repeat(auto-fit, minmax(${maxItemWidth}px, 1fr))` }}>
+        {svgData.map(({ name, src }) => (
+          <li key={name} className="svg-list-item">
+            {typeof src === 'string' ?
+              <img src={src} alt={name} className="svg-preview harmoi-glyph" />:
+              <src className="svg-preview harmoi-glyph" />}
+            <span>{name}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

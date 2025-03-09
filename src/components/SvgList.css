@@ -26,6 +26,13 @@
   margin: 0 auto;
 }
 
+.hidden-list {
+  visibility: hidden;
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
 .svg-list-item {
   display: flex;
   align-items: center;
