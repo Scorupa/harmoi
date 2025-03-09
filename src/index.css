@@ -36,12 +36,14 @@ h1 {
   --bg-color: rgba(240, 240, 240);
   --color-scheme: light;
   --transition-duration: 0.3s;
+  --hover-bg: white;
 }
 
 .dark-mode {
   --text-color: rgba(255, 255, 255, 0.87);
   --bg-color: rgba(36, 36, 36);
   --color-scheme: dark;
+  --hover-bg: black;
 }
 
 body {

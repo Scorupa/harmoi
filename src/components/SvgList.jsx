@@ -46,9 +46,11 @@ const SvgList = ({ svgData }) => {
         style={{ gridTemplateColumns: `repeat(auto-fit, minmax(${maxItemWidth}px, 1fr))` }}>
         {svgData.map(({ name, src }) => (
           <li key={name} className="svg-list-item">
-            {typeof src === 'string' ?
-              <img src={src} alt={name} className="svg-preview harmoi-glyph" />:
-              <src className="svg-preview harmoi-glyph" />}
+            <div className="svg-preview-container">
+              {typeof src === 'string' ?
+                <img src={src} alt={name} className="svg-preview harmoi-glyph" />:
+                <src className="svg-preview harmoi-glyph" />}
+            </div>
             <span>{name}</span>
           </li>
         ))}
