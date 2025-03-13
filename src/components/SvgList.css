@@ -59,3 +59,10 @@
   position: relative; /* Ensures z-index works */
   z-index: 1000; /* Very high to bring it to the front */
 }
+
+@media (hover: none) {
+  .svg-preview-container:hover {
+    transform: none;  /* Prevent scaling */
+    background-color: transparent; /* No background change */
+  }
+}
