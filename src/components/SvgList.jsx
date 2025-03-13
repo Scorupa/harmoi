@@ -30,7 +30,7 @@ const SvgList = ({ svgData }) => {
       }
     };
 
-    const timeout = setTimeout(calculateWidth, 100);
+    const timeout = setTimeout(calculateWidth, 500);
     return () => clearTimeout(timeout);
   }, [svgData]);
 
