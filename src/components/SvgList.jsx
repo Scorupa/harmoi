@@ -37,7 +37,7 @@ const SvgList = ({ svgData }) => {
   return (
     <div className="list-container">
       <button className="toggle-button" onClick={() => setIsListOpen(!isListOpen)}>
-        {isListOpen ? 'Hide List' : 'Show Characters List'}
+        {isListOpen ? 'Hide List' : `Show Characters List (${svgData.length})`}
       </button>
 
       <ul
